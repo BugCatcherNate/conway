@@ -27,19 +27,34 @@ int main()
 void update(int **array, int x_size, int y_size)
 {
     int i;
-    free(*array);
-    *array = malloc(x_size * y_size * sizeof(int));
+
+    int *new_array = (int *)malloc(x_size * y_size * sizeof(int));
     for (i = 0; i < x_size * y_size; ++i)
     {
-        if ((*array)[i] == 0)
+
+        int * temp = &array[i]; 
+        printf("%d", temp);
+        if (temp == 0)
         {
-            (*array[i]) == 1;
+            new_array[i] = 1;
         }
         else
         {
-            (*array)[i] == 0;
+            new_array[i] = 0;
         }
     }
+
+    free(*array);
+
+    *array = (int *)malloc(x_size * y_size * sizeof(int));
+ 
+    for (i = 0; i < x_size * y_size; ++i) {
+
+        (*array)[i] = new_array[i];
+    }
+
+    free(new_array);
+
 }
 
 int *create_world(int x_size, int y_size)
