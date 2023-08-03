@@ -1,9 +1,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <stdbool.h>
 
-int *create_world(int x_size, int y_size);
-void update(int **array, int x_size, int y_size);
+void create_world(int *array, int x_size, int y_size);
+void update(int *array, int x_size, int y_size);
+bool rand_bool();
 int get_value(int *array, int x, int y, int y_size);
 void draw(int *array, int x_size, int y_size);
 
@@ -11,64 +13,27 @@ int main()
 {
     int x_size = 20;
     int y_size = 20;
-    int *array = create_world(x_size, y_size);
+    int array[x_size * y_size];
+    create_world(array, x_size, y_size);
 
     for (;;)
     {
 
-
         draw(array, x_size, y_size);
         sleep(1);
-        update(&array, x_size, y_size);
+        update(array, x_size, y_size);
     }
     free(array);
 }
 
-void update(int **array, int x_size, int y_size)
+void update(int *array, int x_size, int y_size)
 {
     int i;
 
-    int *new_array = (int *)malloc(x_size * y_size * sizeof(int));
     for (i = 0; i < x_size * y_size; ++i)
     {
 
-        int * temp = &array[i]; 
-        printf("%d", temp);
-        if (temp == 0)
-        {
-            new_array[i] = 1;
-        }
-        else
-        {
-            new_array[i] = 0;
-        }
-    }
-
-    free(*array);
-
-    *array = (int *)malloc(x_size * y_size * sizeof(int));
- 
-    for (i = 0; i < x_size * y_size; ++i) {
-
-        (*array)[i] = new_array[i];
-    }
-
-    free(new_array);
-
-}
-
-int *create_world(int x_size, int y_size)
-{
-
-    int i, j;
-    x_size = 100;
-    y_size = 5;
-
-    int *array = (int *)malloc(x_size * y_size * sizeof(int));
-
-    for (i = 0; i < x_size * y_size; ++i)
-    {
-        if (rand_bool())
+        if (array[i] == 0)
         {
             array[i] = 1;
         }
@@ -77,21 +42,30 @@ int *create_world(int x_size, int y_size)
             array[i] = 0;
         }
     }
-
-    return array;
 }
 
-int rand_bool()
+void create_world(int *array, int x_size, int y_size)
 {
 
-    if (rand() % 7 == 0)
+    int i;
+
+    for (i = 0; i < x_size * y_size; ++i)
     {
-        return 1;
+        bool b = rand_bool();
+        if (b)
+        {
+            array[i] = 1;
+        }
+        else
+        {
+            array[i] = 0;
+        }
     }
-    else
-    {
-        return 0;
-    }
+}
+
+bool rand_bool()
+{
+    return rand() % 2 == 1;
 }
 
 void draw(int *array, int x_size, int y_size)
@@ -106,7 +80,7 @@ void draw(int *array, int x_size, int y_size)
             printf("\n");
         }
 
-        printf("%d ", get_value(array, i / y_size, i % x_size, y_size));
+        printf("%d ", array[i]);
     }
     printf("\n");
 }
