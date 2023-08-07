@@ -13,8 +13,8 @@ int get_neighbor_state(int *array, int x, int y, int y_size);
 
 int main()
 {
-    int x_size = 5;
-    int y_size = 5;
+    int x_size = 50;
+    int y_size = 50;
     int old_array[x_size * y_size];
     int new_array[x_size * y_size];
     create_world(old_array, x_size, y_size);
@@ -25,7 +25,8 @@ int main()
         draw(old_array, x_size, y_size);
         sleep(1);
         update(old_array, new_array, x_size, y_size);
-        for (int x = 0; x < (x_size * y_size); ++x){
+        for (int x = 0; x < (x_size * y_size); ++x)
+        {
             old_array[x] = new_array[x];
             new_array[x] = 0;
         }
@@ -44,12 +45,15 @@ void update(int *old_array, int *new_array, int x_size, int y_size)
         int y;
         get_coord(i, y_size, &x, &y);
         int n_state = get_neighbor_state(old_array, x, y, y_size);
-        
-        if (old_array[i] == 1 ){
-            if (n_state <= 1 || n_state >= 4 )
+
+        if (old_array[i] == 1)
+        {
+            if (n_state <= 1 || n_state >= 4)
             {
                 new_array[i] = 0;
-            }else if (n_state == 2 || n_state == 3){
+            }
+            else if (n_state == 2 || n_state == 3)
+            {
 
                 new_array[i] = 1;
             }
@@ -57,16 +61,19 @@ void update(int *old_array, int *new_array, int x_size, int y_size)
             {
                 new_array[i] = 0;
             }
-        }else{
+        }
+        else
+        {
 
-            if (n_state == 3){
+            if (n_state == 3)
+            {
                 new_array[i] = 1;
-            }else{
+            }
+            else
+            {
                 new_array[i] = 0;
             }
-
         }
-
     }
 }
 
@@ -105,52 +112,69 @@ void draw(int *array, int x_size, int y_size)
 
             printf("\n");
         }
+        if (array[i] == 1)
+        {
+            printf("x ");
+        }
+        else
+        {
 
-        printf("%d ", array[i]);
+            printf("* ");
+        }
     }
     printf("\n");
 }
 
-int get_neighbor_state(int *array, int x, int y, int y_size){
+int get_neighbor_state(int *array, int x, int y, int y_size)
+{
 
-   int total_n_alive = 0; 
-   int row = -1; 
-   int col = -1;
-   for ( int n = 0; n < 9; ++n){
+    int total_n_alive = 0;
+    int row = -1;
+    int col = -1;
+    for (int n = 0; n < 9; ++n)
+    {
 
-        if (row == 0 && col == 0){
+        if (row == 0 && col == 0)
+        {
             total_n_alive += 0;
-        }else{ 
-        total_n_alive += get_value(array, x + row, y + col, y_size);
         }
-        if (row == 1){
+        else
+        {
+            total_n_alive += get_value(array, x + row, y + col, y_size);
+        }
+        if (row == 1)
+        {
             row = -1;
             col += 1;
-        }else{
+        }
+        else
+        {
             row += 1;
         }
-        
-   } 
+    }
 
-   return total_n_alive;
-
+    return total_n_alive;
 }
 
-void get_coord(int elem, int y_size, int *x, int *y){
+void get_coord(int elem, int y_size, int *x, int *y)
+{
 
     *x = elem % y_size;
     *y = elem / y_size;
-
 }
 
 int get_value(int *array, int x, int y, int y_size)
 {
-    if (x > y_size || x < 0){
+    if (x > y_size || x < 0)
+    {
         return 0;
     }
-    else if(y > y_size || y < 0){
+    else if (y > y_size || y < 0)
+    {
         return 0;
-    }else{
-    return array[y * y_size + x];
+    }
+    else
+    {
+        return array[y * y_size + x];
     }
 }
