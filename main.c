@@ -41,7 +41,6 @@ int main()
 
     while (!glfwWindowShouldClose(window))
     {
-        sleep(1);
         glClear(GL_COLOR_BUFFER_BIT);
 
         int centerRow = x_size / 2;
@@ -78,6 +77,8 @@ int main()
             old_array[x] = new_array[x];
             new_array[x] = 0;
         }
+
+        sleep(1);
     }
 
     glfwTerminate();
