@@ -15,6 +15,11 @@ void renderSquare(float x, float y)
     glEnd();
 }
 
+void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+    glViewport(0, 0, width, height);
+}
+
 int main()
 {
     if (!glfwInit())
@@ -38,11 +43,14 @@ int main()
     int old_array[x_size * y_size];
     int new_array[x_size * y_size];
     create_world(old_array, x_size, y_size);
+    double last_draw = 0;
 
     while (!glfwWindowShouldClose(window))
     {
+        double seconds = glfwGetTime();
+        
+        
         glClear(GL_COLOR_BUFFER_BIT);
-
         int centerRow = x_size / 2;
         int centerCol = y_size / 2;
 
@@ -70,18 +78,24 @@ int main()
 
         glfwSwapBuffers(window);
         glfwPollEvents();
-        update(old_array, new_array, x_size, y_size);
 
+        if ((seconds - last_draw) > 0.5l ) {
+        update(old_array, new_array, x_size, y_size);
         for (int x = 0; x < (x_size * y_size); ++x)
         {
             old_array[x] = new_array[x];
             new_array[x] = 0;
         }
 
-        sleep(1);
+        last_draw = seconds;
+        }
+        glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+
     }
 
     glfwTerminate();
 
     return 0;
 }
+
+

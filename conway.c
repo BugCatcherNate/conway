@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include "conway.h"
 
+// 2d matrix represented in a 1d array
 void update(int *old_array, int *new_array, int x_size, int y_size)
 {
     int i;
