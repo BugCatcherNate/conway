@@ -7,7 +7,7 @@
 #include "conway.h"
 
 #define SQUARE_SIZE 0.01f
-#define SPACING 0.01f
+#define SQUARE_SPACING 0.015f
 
 GLuint shaderProgram;
 GLuint VBO, VAO;
@@ -69,10 +69,10 @@ int main()
 {
     // Vertex data for a square
     float squareVertices[] = {
-        -0.5f, -0.5f, // Bottom-left
-        0.5f, -0.5f,  // Bottom-right
-        0.5f, 0.5f,   // Top-right
-        -0.5f, 0.5f   // Top-left
+        -0.5f * SQUARE_SIZE, -0.5f * SQUARE_SIZE, // Bottom-left
+        0.5f * SQUARE_SIZE, -0.5f * SQUARE_SIZE,  // Bottom-right
+        0.5f * SQUARE_SIZE, 0.5f * SQUARE_SIZE,   // Top-right
+        -0.5f * SQUARE_SIZE, 0.5f * SQUARE_SIZE  // Top-left
     };
 
     if (!glfwInit())
@@ -151,8 +151,8 @@ int main()
         {
             for (int col = 0; col < y_size; ++col)
             {
-                float x = (col - centerCol) * SPACING;
-                float y = (centerRow - row) * SPACING;
+                float x = (col - centerCol) * SQUARE_SPACING;
+                float y = (centerRow - row) * SQUARE_SPACING;
                 if (get_value(old_array, row, col, y_size) == 0)
                 {
 
